@@ -1,8 +1,8 @@
 require 'pry'
 class Dog 
   
-  attr_accessor :name, :breed 
-  attr_reader :id 
+  attr_accessor :name, :breed
+  attr_reader :id
   
     def initialize(id: nil, name: name, breed: breed)
       @id = id
@@ -45,4 +45,22 @@ class Dog
     dog1 
   end 
   
+  def id=(id)
+    @id = id 
+    return id 
+  end 
+  
+  
+  def self.new_from_db(row)
+    new_dog = self.new(row[0], row[1], row[2]) 
+    new_dog
+  end 
+  
+    
+  
+  def self.find_by_id(id)
+    sql = "SELECT * FROM dogs WHERE id = ?"
+    result = DB[:conn].execute(sql, id)[0][0]
+    return result
+  end 
 end 
